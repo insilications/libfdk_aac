@@ -5,7 +5,7 @@
 %define keepstatic 1
 Name     : libfdk_aac
 Version  : 1
-Release  : 3
+Release  : 6
 URL      : https://github.com/mstorsjo/fdk-aac/archive/master.zip
 Source0  : https://github.com/mstorsjo/fdk-aac/archive/master.zip
 Summary  : AAC codec library
@@ -51,12 +51,16 @@ cd %{_builddir}/fdk-aac-master
 %build
 ## build_prepend content
 find . -type f -name 'configure' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
+find . -type f -name 'configure.ac' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
+find . -type f -name 'libtool' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
+find . -type f -name 'libtool.m4' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
+
 ## build_prepend end
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1586531057
+export SOURCE_DATE_EPOCH=1586533045
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -70,8 +74,12 @@ export CXXFLAGS="-O3 -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-
 %autogen  --enable-static --enable-shared
 ## make_prepend content
 find . -type f -name 'Makefile' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
+find . -type f -name 'configure' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
+find . -type f -name 'configure.ac' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
+find . -type f -name 'libtool' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
+find . -type f -name 'libtool.m4' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
 ## make_prepend end
-make  %{?_smp_mflags}
+make  %{?_smp_mflags}  V=1 VERBOSE=1
 
 %check
 export LANG=C.UTF-8
@@ -81,7 +89,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1586531057
+export SOURCE_DATE_EPOCH=1586533045
 rm -rf %{buildroot}
 %make_install
 
