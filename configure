@@ -1,1 +1,1 @@
---enable-static --enable-shared 
+--enable-static --enable-shared --disable-maintainer-mode

@@ -5,7 +5,7 @@
 %define keepstatic 1
 Name     : libfdk_aac
 Version  : 1
-Release  : 6
+Release  : 8
 URL      : https://github.com/mstorsjo/fdk-aac/archive/master.zip
 Source0  : https://github.com/mstorsjo/fdk-aac/archive/master.zip
 Summary  : AAC codec library
@@ -54,13 +54,13 @@ find . -type f -name 'configure' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
 find . -type f -name 'configure.ac' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
 find . -type f -name 'libtool' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
 find . -type f -name 'libtool.m4' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
-
+echo "AM_MAINTAINER_MODE([disable])" >> configure.ac
 ## build_prepend end
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1586533045
+export SOURCE_DATE_EPOCH=1586551591
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -71,13 +71,15 @@ export FFLAGS="-O3 -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dt
 export CFFLAGS="-O3 -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-sort-common -Wl,-z,now -Wl,-z,relro -Wno-error -Wp,-D_REENTRANT -falign-functions=32 -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -feliminate-unused-debug-types -ffat-lto-objects -fipa-pta -floop-nest-optimize -flto=6 -fno-PIC -fno-PIE -fno-math-errno -fno-pie -fno-plt -fno-semantic-interposition -fno-stack-protector -fno-trapping-math -fpic -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-vectorize -funroll-loops -fuse-ld=bfd -fuse-linker-plugin -g -m64 -malign-data=cacheline -march=native -mtls-dialect=gnu2 -mtune=native -pipe "
 export LDFLAGS="-O3 -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--hash-style=gnu -Wl,-O2 -Wl,-sort-common -Wl,-z,now -Wl,-z,relro -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -ffat-lto-objects -fipa-pta -floop-nest-optimize -flto=6 -fno-PIC -fno-PIE -fno-pie -fno-plt -fno-semantic-interposition -fno-stack-protector -fpic -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-vectorize -funroll-loops -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -march=native -mtls-dialect=gnu2 -mtune=native "
 export CXXFLAGS="-O3 -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-sort-common -Wl,-z,now -Wl,-z,relro -Wno-error -Wp,-D_REENTRANT -falign-functions=32 -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -feliminate-unused-debug-types -ffat-lto-objects -fipa-pta -floop-nest-optimize -flto=6 -fno-PIC -fno-PIE -fno-math-errno -fno-pie -fno-plt -fno-semantic-interposition -fno-stack-protector -fno-trapping-math -fpic -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-vectorize -funroll-loops -fuse-ld=bfd -fuse-linker-plugin -fvisibility-inlines-hidden -g -m64 -malign-data=cacheline -march=native -mtls-dialect=gnu2 -mtune=native -pipe "
-%autogen  --enable-static --enable-shared
+%autogen  --enable-static --enable-shared --disable-maintainer-mode
 ## make_prepend content
 find . -type f -name 'Makefile' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
 find . -type f -name 'configure' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
 find . -type f -name 'configure.ac' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
 find . -type f -name 'libtool' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
 find . -type f -name 'libtool.m4' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
+find . -type f -name 'config.status' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
+echo "AM_MAINTAINER_MODE([disable])" >> configure.ac
 ## make_prepend end
 make  %{?_smp_mflags}  V=1 VERBOSE=1
 
@@ -89,7 +91,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1586533045
+export SOURCE_DATE_EPOCH=1586551591
 rm -rf %{buildroot}
 %make_install
 
