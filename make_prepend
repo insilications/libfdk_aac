@@ -4,4 +4,3 @@ find . -type f -name 'configure.ac' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
 find . -type f -name 'libtool' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
 find . -type f -name 'libtool.m4' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
 find . -type f -name 'config.status' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
-echo "AM_MAINTAINER_MODE([disable])" >> configure.ac
