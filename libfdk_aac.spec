@@ -5,7 +5,7 @@
 %define keepstatic 1
 Name     : libfdk_aac
 Version  : 2.0.1
-Release  : 9
+Release  : 10
 URL      : file:///insilications/build/clearlinux/packages/libfdk_aac/libfdk_aac-v2.0.1.zip
 Source0  : file:///insilications/build/clearlinux/packages/libfdk_aac/libfdk_aac-v2.0.1.zip
 Summary  : AAC codec library
@@ -58,12 +58,13 @@ find . -type f -name '*.ac' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
 find . -type f -name 'libtool*' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
 find . -type f -name '*.m4' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
 echo "AM_MAINTAINER_MODE([disable])" >> configure.ac
+find . -type f -name 'config.status' -exec touch {} \;
 ## build_prepend end
 unset http_proxy
 unset https_proxy
 unset no_proxy
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1595040771
+export SOURCE_DATE_EPOCH=1595040874
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -104,7 +105,7 @@ unset no_proxy
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1595040771
+export SOURCE_DATE_EPOCH=1595040874
 rm -rf %{buildroot}
 %make_install
 
