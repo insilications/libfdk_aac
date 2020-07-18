@@ -1,5 +1,5 @@
 PKG_NAME := libfdk_aac
-URL = https://github.com/mstorsjo/fdk-aac/archive/master.zip
+URL = https://github.com/mstorsjo/fdk-aac.git
 ARCHIVES = 
 
 include ../common/Makefile.common
