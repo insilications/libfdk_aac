@@ -5,13 +5,14 @@
 %define keepstatic 1
 Name     : libfdk_aac
 Version  : 2.0.1
-Release  : 10
+Release  : 11
 URL      : file:///insilications/build/clearlinux/packages/libfdk_aac/libfdk_aac-v2.0.1.zip
 Source0  : file:///insilications/build/clearlinux/packages/libfdk_aac/libfdk_aac-v2.0.1.zip
 Summary  : AAC codec library
 Group    : Development/Tools
 License  : GPL-2.0
 Requires: libfdk_aac-lib = %{version}-%{release}
+BuildRequires : findutils
 # Suppress stripping binaries
 %define __strip /bin/true
 %define debug_package %{nil}
@@ -53,18 +54,18 @@ cd %{_builddir}/libfdk_aac-v2.0.1
 
 %build
 ## build_prepend content
-find . -type f -name 'configure*' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
-find . -type f -name '*.ac' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
-find . -type f -name 'libtool*' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
-find . -type f -name '*.m4' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
-echo "AM_MAINTAINER_MODE([disable])" >> configure.ac
-find . -type f -name 'config.status' -exec touch {} \;
+#find . -type f -name 'configure*' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
+#find . -type f -name '*.ac' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
+#find . -type f -name 'libtool*' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
+#find . -type f -name '*.m4' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
+#echo "AM_MAINTAINER_MODE([disable])" >> configure.ac
+#find . -type f -name 'config.status' -exec touch {} \;
 ## build_prepend end
 unset http_proxy
 unset https_proxy
 unset no_proxy
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1595040874
+export SOURCE_DATE_EPOCH=1596934057
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -86,26 +87,27 @@ export RANLIB=gcc-ranlib
 export NM=gcc-nm
 #export CCACHE_DISABLE=1
 ## altflags1 end
-%autogen  --enable-static --enable-shared --disable-maintainer-mode
+%autogen  --enable-static --enable-shared
 ## make_prepend content
-find . -type f -name 'Makefile*' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
-find . -type f -name 'configure*' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
-find . -type f -name '*.ac' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
-find . -type f -name 'libtool*' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
-find . -type f -name '*.m4' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
-find . -type f -name 'config.status' -exec touch {} \;
+#find . -type f -name 'Makefile*' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
+#find . -type f -name 'configure*' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
+#find . -type f -name '*.ac' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
+#find . -type f -name 'libtool*' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
+#find . -type f -name '*.m4' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
+#find . -type f -name 'config.status' -exec touch {} \;
 ## make_prepend end
 make  %{?_smp_mflags}  V=1 VERBOSE=1
+
 
 %check
 export LANG=C.UTF-8
 unset http_proxy
 unset https_proxy
 unset no_proxy
-make VERBOSE=1 V=1 %{?_smp_mflags} check
+make %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1595040874
+export SOURCE_DATE_EPOCH=1596934057
 rm -rf %{buildroot}
 %make_install
 
